@@ -19,4 +19,4 @@ build: version
 
 .PHONY: clean
 clean:
-	@rm -f gh-revision version.txt
+	@rm -f gh-pr-revision version.txt

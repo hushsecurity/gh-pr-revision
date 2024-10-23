@@ -8,10 +8,10 @@ import (
 )
 
 const (
-	mdPrefix  = "[//]: # (gh-revision:"
+	mdPrefix  = "[//]: # (gh-pr-revision:"
 	mdSuffix  = ")"
-	bodyStart = "[//]: # (gh-revision-body-start)"
-	bodyEnd   = "[//]: # (gh-revision-body-end)"
+	bodyStart = "[//]: # (gh-pr-revision-body-start)"
+	bodyEnd   = "[//]: # (gh-pr-revision-body-end)"
 )
 
 type Revision struct {
