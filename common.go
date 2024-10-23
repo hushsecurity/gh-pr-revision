@@ -11,6 +11,7 @@ import (
 
 	"github.com/cli/cli/v2/pkg/iostreams"
 	"github.com/cli/go-gh/v2"
+	api "github.com/cli/go-gh/v2/pkg/api"
 	"github.com/kballard/go-shellquote"
 )
 
@@ -20,12 +21,23 @@ var (
 
 func getPullRequest() (pr PullRequest, err error) {
 	stdout, stderr, err := gh.Exec("pr", "view", "--json",
-		"id,number,state,isDraft,commits,comments,reviewRequests")
+		"id,number,state,isDraft,commits,comments,reviewRequests,headRepository,headRepositoryOwner")
 	if err != nil {
 		return pr, fmt.Errorf("'gh pr view' failed: %s", stderr.String())
 	}
 	if err = json.Unmarshal(stdout.Bytes(), &pr); err != nil {
 		return pr, fmt.Errorf("failed to parse pr: %v", err)
+	}
+	return pr, nil
+}
+
+func getPullRequestFromApi(owner, repo string, number uint64) (pr ApiPullRequest, err error) {
+	client, err := api.DefaultRESTClient()
+	if err != nil {
+		return pr, fmt.Errorf("failed to create REST client: %v", err)
+	}
+	if err = client.Get(fmt.Sprintf("repos/%s/%s/pulls/%d", owner, repo, number), &pr); err != nil {
+		return pr, fmt.Errorf("failed to get pull request from api: %v", err)
 	}
 	return pr, nil
 }
