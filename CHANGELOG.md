@@ -15,6 +15,9 @@ This was done because ideally we would like to have a `gh pr revision` command.
 However, given that extensions cannot be put under builtin commands, we decided
 to have the next best thing `gh pr-revision`.
 
+Note that this release is not backward compatible. It changes the revision metadata
+format. Therefore, old revisions will not be properly parsed.
+
 ### Changed
 
 - rename the tool to `gh-pr-revision`.
