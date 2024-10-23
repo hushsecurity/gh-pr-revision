@@ -115,7 +115,7 @@ func reviewersLine(pr ApiPullRequest) string {
 	return strings.Join(reviewers, " ")
 }
 
-func newPrComment(pr PullRequest, apiPr ApiPullRequest, newRevision Revision, revisions []Revision) (path string, err error) {
+func newPrComment(apiPr ApiPullRequest, newRevision Revision, revisions []Revision) (path string, err error) {
 	links, err := linkLines(newRevision, revisions)
 	if err != nil {
 		return "", err
@@ -220,7 +220,7 @@ func createRevision(args CreateArgs) error {
 		return err
 	}
 
-	path, err := newPrComment(pr, apiPr, newRev, revisions)
+	path, err := newPrComment(apiPr, newRev, revisions)
 	if err != nil {
 		return err
 	}
