@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -141,4 +142,13 @@ func editUserComment(ioStreams *iostreams.IOStreams) (string, error) {
 	}
 
 	return string(bytes.TrimPrefix(data, bom)), nil
+}
+
+func hasCommit(hash string) bool {
+	args := []string{"cat-file", "-e", hash}
+	cmd := exec.CommandContext(context.Background(), "git", args...)
+	if err := cmd.Run(); err == nil {
+		return true
+	}
+	return false
 }
