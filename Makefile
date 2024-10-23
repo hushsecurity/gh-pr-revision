@@ -2,8 +2,16 @@
 all: lint build
 
 .PHONY: lint
-lint: version
+lint: shellcheck gofmt version
 	@golangci-lint run
+
+.PHONY: shellcheck
+shellcheck:
+	@find . -name "*.sh" -exec shellcheck {} +
+
+.PHONY: gofmt
+gofmt:
+	@./ci/gofmt.sh .
 
 .PHONY: version
 version:
