@@ -32,4 +32,4 @@ jobs:
       - name: Build
         run: make build
       - name: Show version
-        run: ./gh-revision --version
+        run: ./gh-pr-revision --version

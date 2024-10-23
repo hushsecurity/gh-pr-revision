@@ -142,7 +142,7 @@ func newPrComment(pr PullRequest, newRevision Revision, revisions []Revision) (p
 	}
 	fmt.Fprintf(&buf, "%s", encoded)
 
-	tmpFile, err := os.CreateTemp("", "gh-revision.*.md")
+	tmpFile, err := os.CreateTemp("", "gh-pr-revision.*.md")
 	if err != nil {
 		return "", fmt.Errorf("failed to create temporary file: %v", err)
 	}

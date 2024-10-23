@@ -87,7 +87,7 @@ func addPrComment(path string) error {
 }
 
 func editUserComment(ioStreams *iostreams.IOStreams) (string, error) {
-	tmpFile, err := os.CreateTemp("", "gh-revision-user-comment.*.md")
+	tmpFile, err := os.CreateTemp("", "gh-pr-revision-user-comment.*.md")
 	if err != nil {
 		return "", fmt.Errorf("failed to create temporary file: %v", err)
 	}

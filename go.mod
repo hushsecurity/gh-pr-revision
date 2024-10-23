@@ -1,4 +1,4 @@
-module github.com/hushsecurity/gh-revision
+module github.com/hushsecurity/gh-pr-revision
 
 go 1.23.2
 
