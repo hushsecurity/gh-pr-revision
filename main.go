@@ -16,6 +16,11 @@ type CreateArgs struct {
 	Edit      bool   `arg:"-e, --editor" help:"open an editor to add revision comment"`
 }
 
+type DiffArgs struct {
+	From uint64 `arg:"positional,required"`
+	To   uint64 `arg:"positional,required"`
+}
+
 type ListArgs struct {
 	Verbose bool `arg:"-v, --verbose" help:"enable verbose mode"`
 }
@@ -25,9 +30,11 @@ type ShowArgs struct {
 }
 
 type Args struct {
-	Create *CreateArgs `arg:"subcommand:create" help:"create revision"`
-	List   *ListArgs   `arg:"subcommand:list" help:"list revisions"`
-	Show   *ShowArgs   `arg:"subcommand:show" help:"show revision"`
+	Create   *CreateArgs `arg:"subcommand:create" help:"create revision"`
+	Diff     *DiffArgs   `arg:"subcommand:diff" help:"compare revisions with 'git diff'"`
+	DiffTool *DiffArgs   `arg:"subcommand:difftool" help:"compare revisions with 'git difftool'"`
+	List     *ListArgs   `arg:"subcommand:list" help:"list revisions"`
+	Show     *ShowArgs   `arg:"subcommand:show" help:"show revision"`
 }
 
 func (Args) Description() string {
@@ -68,6 +75,10 @@ func main() {
 	switch {
 	case args.Create != nil:
 		err = createRevision(*args.Create)
+	case args.Diff != nil:
+		err = diffRevisions(*args.Diff, "diff")
+	case args.DiffTool != nil:
+		err = diffRevisions(*args.DiffTool, "difftool")
 	case args.List != nil:
 		err = listRevisions(*args.List)
 	case args.Show != nil:
