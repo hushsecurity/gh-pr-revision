@@ -25,9 +25,12 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: stable
+      - name: Lint
+        run: make shellcheck gofmt
+        if: runner.os == 'Linux'
       - name: Create version file
         run: make version
-      - name: Lint
+      - name: Go Lint
         uses: golangci/golangci-lint-action@v6
       - name: Build
         run: make build
