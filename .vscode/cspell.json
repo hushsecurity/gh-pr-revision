@@ -1,0 +1,23 @@
+{
+    "version": "0.2",
+    "language": "en",
+    "words": [
+        "hushsecurity",
+        "commitish",
+        "difftool",
+        "iostreams",
+        "shellquote",
+        "kballard",
+        "alexflint",
+        "errcheck",
+        "gosimple",
+        "govet",
+        "ineffassign",
+        "staticcheck",
+        "unparam",
+        "shellcheck",
+        "gofmt",
+        "golangci"
+    ],
+    "flagWords": []
+}
