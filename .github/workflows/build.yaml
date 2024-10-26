@@ -17,12 +17,20 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
+      pull-requests: read
     steps:
       - name: Git Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           fetch-tags: true
+      - name: Linear PR history
+        if: github.event_name == 'pull_request'
+        uses: NexusPHP/no-merge-commits@v2.1.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
