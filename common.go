@@ -96,7 +96,7 @@ func addPrComment(path string) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("'gh pr comment' failed: %v", err)
 	}
-	return output.String(), nil
+	return strings.TrimSpace(output.String()), nil
 }
 
 func editUserComment(ioStreams *iostreams.IOStreams) (string, error) {
