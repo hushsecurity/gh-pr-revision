@@ -32,7 +32,7 @@ gh pr-revision --help
 
 ```text
 GitHub CLI extension for pull request revisions
-v0.2.0-7-gc8e5dab157
+v0.4.0
 Usage: gh-pr-revision <command> [<args>]
 
 Options:
