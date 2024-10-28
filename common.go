@@ -91,12 +91,12 @@ func revParse(ref string) (string, error) {
 	return strings.TrimSpace(string(out)), nil
 }
 
-func addPrComment(path string) error {
-	_, _, err := gh.Exec("pr", "comment", "-F", path)
+func addPrComment(path string) (string, error) {
+	output, _, err := gh.Exec("pr", "comment", "-F", path)
 	if err != nil {
-		return fmt.Errorf("'gh pr comment' failed: %v", err)
+		return "", fmt.Errorf("'gh pr comment' failed: %v", err)
 	}
-	return nil
+	return output.String(), nil
 }
 
 func editUserComment(ioStreams *iostreams.IOStreams) (string, error) {
