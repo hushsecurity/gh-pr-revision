@@ -99,7 +99,7 @@ func addPrComment(path string) (string, error) {
 	return strings.TrimSpace(output.String()), nil
 }
 
-func editUserComment(ioStreams *iostreams.IOStreams) (string, error) {
+func editUserComment(ioStreams *iostreams.IOStreams, message string) (string, error) {
 	tmpFile, err := os.CreateTemp("", "gh-pr-revision-user-comment.*.md")
 	if err != nil {
 		return "", fmt.Errorf("failed to create temporary file: %v", err)
@@ -109,6 +109,12 @@ func editUserComment(ioStreams *iostreams.IOStreams) (string, error) {
 	if runtime.GOOS == "windows" {
 		if _, err := tmpFile.Write(bom); err != nil {
 			return "", fmt.Errorf("failed to write bom: %v", err)
+		}
+	}
+
+	if len(message) > 0 {
+		if _, err := tmpFile.WriteString(message); err != nil {
+			return "", fmt.Errorf("failed to write message: %v", err)
 		}
 	}
 
