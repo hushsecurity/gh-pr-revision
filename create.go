@@ -201,13 +201,15 @@ func createRevision(args CreateArgs) error {
 	var body string
 	if args.Edit {
 		ioStreams.StopProgressIndicator()
-		if body, err = editUserComment(ioStreams); err != nil {
+		if body, err = editUserComment(ioStreams, args.Message); err != nil {
 			return err
 		}
 		ioStreams.StartProgressIndicator()
 		if len(body) == 0 {
 			return fmt.Errorf("empty revision comment: aborted")
 		}
+	} else {
+		body = args.Message
 	}
 
 	newRev, err := newRevision(hash, pr, revisions, body)
