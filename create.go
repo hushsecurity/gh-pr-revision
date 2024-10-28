@@ -226,5 +226,15 @@ func createRevision(args CreateArgs) error {
 	}
 	defer os.Remove(path)
 
-	return addPrComment(path)
+	out, err := addPrComment(path)
+	if err != nil {
+		return err
+	}
+
+	ioStreams.StopProgressIndicator()
+
+	fmt.Printf("Revision %d\n", newRev.Number)
+	fmt.Printf("%s\n", out)
+
+	return nil
 }
