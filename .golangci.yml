@@ -1,4 +1,7 @@
 ---
+run:
+  timeout: 3m
+
 linters:
   enable:
     - errcheck
