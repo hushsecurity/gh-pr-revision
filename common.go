@@ -20,6 +20,11 @@ var (
 	bom = []byte{0xEF, 0xBB, 0xBF}
 )
 
+type reviewRequest struct {
+	Reviewers     []string `json:"reviewers"`
+	TeamReviewers []string `json:"team_reviewers"`
+}
+
 func getPullRequest() (pr PullRequest, err error) {
 	stdout, stderr, err := gh.Exec("pr", "view", "--json",
 		"id,number,state,isDraft,commits,comments,reviewRequests,headRepository,headRepositoryOwner")
@@ -41,6 +46,22 @@ func getPullRequestFromApi(owner, repo string, number uint64) (pr ApiPullRequest
 		return pr, fmt.Errorf("failed to get pull request from api: %v", err)
 	}
 	return pr, nil
+}
+
+func requestReviews(owner, repo string, number uint64, revision Revision) error {
+	client, err := api.DefaultRESTClient()
+	if err != nil {
+		return fmt.Errorf("failed to create REST client: %v", err)
+	}
+	buf, err := json.Marshal(revision.createReviewRequest())
+	if err != nil {
+		return fmt.Errorf("failed to marshal review request: %v", err)
+	}
+	body := bytes.NewReader(buf)
+	if err = client.Post(fmt.Sprintf("repos/%s/%s/pulls/%d/requested_reviewers", owner, repo, number), body, nil); err != nil {
+		return fmt.Errorf("failed to post review request: %v", err)
+	}
+	return nil
 }
 
 func getRepository() (repo Repository, err error) {

@@ -100,22 +100,18 @@ func linkLines(newRevision Revision, revisions []Revision) (links []string, err 
 	return links, nil
 }
 
-func reviewersLine(pr ApiPullRequest) string {
+func reviewersLine(revision Revision) string {
 	var reviewers []string
-	for _, rr := range pr.Reviewers {
-		if rr.Type == "User" && len(rr.Login) > 0 {
-			reviewers = append(reviewers, fmt.Sprintf("@%s", rr.Login))
-		}
+	for _, login := range revision.UserReviewers {
+		reviewers = append(reviewers, fmt.Sprintf("@%s", login))
 	}
-	for _, rt := range pr.ReviewerTeams {
-		if len(rt.Slug) > 0 {
-			reviewers = append(reviewers, fmt.Sprintf("@%s", rt.Slug))
-		}
+	for _, slug := range revision.TeamReviewers {
+		reviewers = append(reviewers, fmt.Sprintf("@%s", slug))
 	}
 	return strings.Join(reviewers, " ")
 }
 
-func newPrComment(apiPr ApiPullRequest, newRevision Revision, revisions []Revision) (path string, err error) {
+func newPrComment(newRevision Revision, revisions []Revision) (path string, err error) {
 	links, err := linkLines(newRevision, revisions)
 	if err != nil {
 		return "", err
@@ -135,7 +131,7 @@ func newPrComment(apiPr ApiPullRequest, newRevision Revision, revisions []Revisi
 	}
 	fmt.Fprintf(&buf, "\n")
 
-	reviewers := reviewersLine(apiPr)
+	reviewers := reviewersLine(newRevision)
 	if len(reviewers) > 0 {
 		fmt.Fprintf(&buf, "**CC** %s\n", reviewers)
 	}
@@ -222,7 +218,10 @@ func createRevision(args CreateArgs) error {
 		return err
 	}
 
-	path, err := newPrComment(apiPr, newRev, revisions)
+	newRev.ExtendReviewers(revisions...)
+	newRev.ExtendReviewersFromApi(apiPr)
+
+	path, err := newPrComment(newRev, revisions)
 	if err != nil {
 		return err
 	}
@@ -230,6 +229,10 @@ func createRevision(args CreateArgs) error {
 
 	out, err := addPrComment(path)
 	if err != nil {
+		return err
+	}
+
+	if err := requestReviews(pr.Owner.Login, pr.Repository.Name, pr.Number, newRev); err != nil {
 		return err
 	}
 
