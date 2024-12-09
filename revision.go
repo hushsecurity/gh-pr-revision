@@ -15,11 +15,13 @@ const (
 )
 
 type Revision struct {
-	CreatedAt string `json:"-"`
-	Number    uint64 `json:"number"`
-	Hash      string `json:"hash"`
-	BaseHash  string `json:"baseHash"`
-	Comment   string `json:"-"`
+	CreatedAt     string   `json:"-"`
+	Number        uint64   `json:"number"`
+	Hash          string   `json:"hash"`
+	BaseHash      string   `json:"baseHash"`
+	UserReviewers []string `json:"user_reviewers,omitempty"`
+	TeamReviewers []string `json:"team_reviewers,omitempty"`
+	Comment       string   `json:"-"`
 }
 
 func (r Revision) Dump(w io.Writer, long bool) {
@@ -32,6 +34,52 @@ func (r Revision) Dump(w io.Writer, long bool) {
 		}
 	} else {
 		fmt.Fprintf(w, "%2d. %s %s\n", r.Number, r.CreatedAt, r.Hash)
+	}
+}
+
+func (r *Revision) AddUserReviewer(login string) {
+	if len(login) == 0 {
+		return
+	}
+	for _, l := range r.UserReviewers {
+		if l == login {
+			return
+		}
+	}
+	r.UserReviewers = append(r.UserReviewers, login)
+}
+
+func (r *Revision) AddTeamReviewer(slug string) {
+	if len(slug) == 0 {
+		return
+	}
+	for _, s := range r.TeamReviewers {
+		if s == slug {
+			return
+		}
+	}
+	r.TeamReviewers = append(r.TeamReviewers, slug)
+}
+
+func (r *Revision) ExtendReviewers(revisions ...Revision) {
+	for _, other := range revisions {
+		for _, login := range other.UserReviewers {
+			r.AddUserReviewer(login)
+		}
+		for _, slug := range other.TeamReviewers {
+			r.AddTeamReviewer(slug)
+		}
+	}
+}
+
+func (r *Revision) ExtendReviewersFromApi(apiPr ApiPullRequest) {
+	for _, v := range apiPr.Reviewers {
+		if v.Type == "User" {
+			r.AddUserReviewer(v.Login)
+		}
+	}
+	for _, v := range apiPr.ReviewerTeams {
+		r.AddTeamReviewer(v.Slug)
 	}
 }
 
