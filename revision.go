@@ -83,6 +83,15 @@ func (r *Revision) ExtendReviewersFromApi(apiPr ApiPullRequest) {
 	}
 }
 
+func (r Revision) createReviewRequest() reviewRequest {
+	var request reviewRequest
+	request.Reviewers = make([]string, len(r.UserReviewers))
+	copy(request.Reviewers, r.UserReviewers)
+	request.TeamReviewers = make([]string, len(r.TeamReviewers))
+	copy(request.TeamReviewers, r.TeamReviewers)
+	return request
+}
+
 func parseRevisions(pr PullRequest) (revisions []Revision, err error) {
 	var rev *Revision
 	for _, comment := range pr.Comments {

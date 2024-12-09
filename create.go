@@ -232,6 +232,10 @@ func createRevision(args CreateArgs) error {
 		return err
 	}
 
+	if err := requestReviews(pr.Owner.Login, pr.Repository.Name, pr.Number, newRev); err != nil {
+		return err
+	}
+
 	ioStreams.StopProgressIndicator()
 
 	fmt.Printf("Revision %d\n", newRev.Number)
