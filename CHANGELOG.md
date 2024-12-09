@@ -7,6 +7,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2024-12-09
+
+### Added
+
+- automatically refresh review requests when new revision is created.
+
+  Note that it is impossible to automatically remove a user from reviewers list.
+  Every new revision will post a review request to all users that were ever requested
+  a review on current PR.
+
+### Changed
+
+- change Revision metadata to include a set of reviewers and team reviewers.
+  Every revision's set is a union of all previous revisions' sets and the current set
+  of outstanding reviews reported by GH Api.
+
 ## [0.4.0] - 2024-10-28
 
 This release adds small usability features:
@@ -58,3 +74,4 @@ Initial release.
 [0.2.0]: https://github.com/hushsecurity/gh-pr-revision/compare/v0.1.0...v0.2.0
 [0.3.0]: https://github.com/hushsecurity/gh-pr-revision/compare/v0.2.0...v0.3.0
 [0.4.0]: https://github.com/hushsecurity/gh-pr-revision/compare/v0.3.0...v0.4.0
+[0.5.0]: https://github.com/hushsecurity/gh-pr-revision/compare/v0.4.0...v0.5.0
