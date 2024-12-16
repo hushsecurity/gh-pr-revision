@@ -61,6 +61,18 @@ func (r *Revision) AddTeamReviewer(slug string) {
 	r.TeamReviewers = append(r.TeamReviewers, slug)
 }
 
+func (r *Revision) ExtendUserReviewers(reviewers ...string) {
+	for _, login := range reviewers {
+		r.AddUserReviewer(login)
+	}
+}
+
+func (r *Revision) ExtendTeamReviewers(reviewers ...string) {
+	for _, slug := range reviewers {
+		r.AddTeamReviewer(slug)
+	}
+}
+
 func (r *Revision) ExtendReviewers(revisions ...Revision) {
 	for _, other := range revisions {
 		for _, login := range other.UserReviewers {
