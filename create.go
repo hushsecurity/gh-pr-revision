@@ -220,6 +220,8 @@ func createRevision(args CreateArgs) error {
 
 	newRev.ExtendReviewers(revisions...)
 	newRev.ExtendReviewersFromApi(apiPr)
+	newRev.ExtendUserReviewers(args.UserReviewer...)
+	newRev.ExtendTeamReviewers(args.TeamReviewer...)
 
 	path, err := newPrComment(newRev, revisions)
 	if err != nil {
