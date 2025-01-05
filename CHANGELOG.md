@@ -7,6 +7,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.0] - 2025-01-05
+
+### Added
+
+- Add `-n, --no-review` knob to `create` command.
+
+  This is handy when a PR is already approved but needs to be rebased over a fresh
+  `main` tip for merging. In this case we would like to add a revision because of the
+  rebase, but there is no need to request reviews because in most cases the PR will be
+  merged immediately after Build succeeds. If any changes are required after rebase
+  another revision can be created including review requests. This revision has a clean
+  diff because it doesn't include the rebase changes.
+
 ## [0.6.0] - 2024-12-16
 
 ### Added
