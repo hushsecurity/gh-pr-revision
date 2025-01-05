@@ -17,6 +17,7 @@ type CreateArgs struct {
 	Message      string   `arg:"-m, --message" help:"add this as revision comment"`
 	UserReviewer []string `arg:"-r, --reviewer,separate" help:"add a user reviewer to the pull-request"`
 	TeamReviewer []string `arg:"-t, --team-reviewer,separate" help:"add a team reviewer to the pull-request"`
+	NoReview     bool     `arg:"-n, --no-review" help:"do not send review requests"`
 }
 
 type DiffArgs struct {
