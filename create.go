@@ -111,7 +111,7 @@ func reviewersLine(revision Revision) string {
 	return strings.Join(reviewers, " ")
 }
 
-func newPrComment(newRevision Revision, revisions []Revision) (path string, err error) {
+func newPrComment(args CreateArgs, newRevision Revision, revisions []Revision) (path string, err error) {
 	links, err := linkLines(newRevision, revisions)
 	if err != nil {
 		return "", err
@@ -131,11 +131,15 @@ func newPrComment(newRevision Revision, revisions []Revision) (path string, err 
 	}
 	fmt.Fprintf(&buf, "\n")
 
-	reviewers := reviewersLine(newRevision)
-	if len(reviewers) > 0 {
-		fmt.Fprintf(&buf, "**CC** %s\n", reviewers)
+	if !args.NoReview {
+		reviewers := reviewersLine(newRevision)
+		if len(reviewers) > 0 {
+			fmt.Fprintf(&buf, "**CC** %s\n", reviewers)
+		}
+		fmt.Fprintf(&buf, "\n")
 	}
-	fmt.Fprintf(&buf, "\n\n")
+
+	fmt.Fprintf(&buf, "\n")
 
 	encoded, err := encodeRevision(newRevision)
 	if err != nil {
@@ -223,7 +227,7 @@ func createRevision(args CreateArgs) error {
 	newRev.ExtendUserReviewers(args.UserReviewer...)
 	newRev.ExtendTeamReviewers(args.TeamReviewer...)
 
-	path, err := newPrComment(newRev, revisions)
+	path, err := newPrComment(args, newRev, revisions)
 	if err != nil {
 		return err
 	}
@@ -234,8 +238,10 @@ func createRevision(args CreateArgs) error {
 		return err
 	}
 
-	if err := requestReviews(pr.Owner.Login, pr.Repository.Name, pr.Number, newRev); err != nil {
-		return err
+	if !args.NoReview {
+		if err := requestReviews(pr.Owner.Login, pr.Repository.Name, pr.Number, newRev); err != nil {
+			return err
+		}
 	}
 
 	ioStreams.StopProgressIndicator()
