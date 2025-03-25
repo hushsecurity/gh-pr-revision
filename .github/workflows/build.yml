@@ -41,7 +41,7 @@ jobs:
       - name: Create version file
         run: make version
       - name: Go Lint
-        uses: golangci/golangci-lint-action@v6
+        uses: golangci/golangci-lint-action@v7
       - name: Build
         run: make build
       - name: Show version
