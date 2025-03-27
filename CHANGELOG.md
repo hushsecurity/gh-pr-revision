@@ -7,6 +7,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.1] - 2025-03-27
+
+### Changed
+
+- update dependencies to latest versions
+- move to `golangci-lint v2`
+
 ## [0.7.0] - 2025-01-05
 
 ### Added
@@ -99,3 +106,4 @@ Initial release.
 [0.5.0]: https://github.com/hushsecurity/gh-pr-revision/compare/v0.4.0...v0.5.0
 [0.6.0]: https://github.com/hushsecurity/gh-pr-revision/compare/v0.5.0...v0.6.0
 [0.7.0]: https://github.com/hushsecurity/gh-pr-revision/compare/v0.6.0...v0.7.0
+[0.7.1]: https://github.com/hushsecurity/gh-pr-revision/compare/v0.7.0...v0.7.1
