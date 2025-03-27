@@ -4,7 +4,7 @@ go 1.23.2
 
 require (
 	github.com/alexflint/go-arg v1.5.1
-	github.com/cli/cli/v2 v2.67.0
+	github.com/cli/cli/v2 v2.69.0
 	github.com/cli/go-gh/v2 v2.11.2
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51
 )
@@ -26,8 +26,8 @@ require (
 	github.com/muesli/termenv v0.15.3-0.20240618155329-98d742f6907a // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/thlib/go-timezone-local v0.0.0-20210907160436-ef149e42d28e // indirect
-	golang.org/x/sys v0.29.0 // indirect
-	golang.org/x/term v0.28.0 // indirect
-	golang.org/x/text v0.21.0 // indirect
+	golang.org/x/sys v0.30.0 // indirect
+	golang.org/x/term v0.29.0 // indirect
+	golang.org/x/text v0.22.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
