@@ -31,9 +31,10 @@ func diffRevisions(args DiffArgs, tool string) error {
 
 	var fromHash, toHash string
 	for _, r := range revisions {
-		if r.Number == args.From {
+		switch r.Number {
+		case args.From:
 			fromHash = r.Hash
-		} else if r.Number == args.To {
+		case args.To:
 			toHash = r.Hash
 		}
 	}

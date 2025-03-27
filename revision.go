@@ -169,7 +169,7 @@ func parseBody(comment Comment) string {
 		lines = append(lines, line)
 	}
 
-	if !(startSeen && endSeen) {
+	if !startSeen || !endSeen {
 		return ""
 	}
 
