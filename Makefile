@@ -11,7 +11,7 @@ shellcheck:
 
 .PHONY: gofmt
 gofmt:
-	@./ci/gofmt.sh .
+	@golangci-lint fmt -d
 
 .PHONY: version
 version:
