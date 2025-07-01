@@ -5,11 +5,7 @@ updates:
     directory: /
     schedule:
       interval: daily
-    reviewers:
-      - "r-bk"
   - package-ecosystem: gomod
     directory: /
     schedule:
       interval: monthly
-    reviewers:
-      - "r-bk"
