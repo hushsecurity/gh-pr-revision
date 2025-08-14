@@ -29,7 +29,19 @@ func getPullRequest() (pr PullRequest, err error) {
 	stdout, stderr, err := gh.Exec("pr", "view", "--json",
 		"id,number,state,isDraft,commits,comments,reviewRequests,headRepository,headRepositoryOwner")
 	if err != nil {
-		return pr, fmt.Errorf("'gh pr view' failed: %s", stderr.String())
+		var buf bytes.Buffer
+		if s := stdout.String(); s != "" {
+			buf.WriteString("stdout: ")
+			buf.WriteString(s)
+		}
+		if s := stderr.String(); s != "" {
+			if buf.Len() > 0 {
+				buf.WriteString("; ")
+			}
+			buf.WriteString("stderr: ")
+			buf.WriteString(s)
+		}
+		return pr, fmt.Errorf("'gh pr view' failed: %s", buf.String())
 	}
 	if err = json.Unmarshal(stdout.Bytes(), &pr); err != nil {
 		return pr, fmt.Errorf("failed to parse pr: %v", err)
