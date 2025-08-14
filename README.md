@@ -93,3 +93,7 @@ Now a new revision can be created with a shorter command `gh rvc -e`.
    long list of revisions, creation of a new one may fail due to GitHub limitations.
    This is because every new revision contains 2 additional comparison urls that make
    the metadata bigger.
+
+1. The plugin invokes `gh` CLI. The CLI, when invoked from the plugin, fails to
+   authenticate in GitHub when installed from `snap`. Make sure to install `gh` from
+   APT as [described here](https://github.com/cli/cli/blob/trunk/docs/install_linux.md#installing-gh-on-linux-and-bsd).
