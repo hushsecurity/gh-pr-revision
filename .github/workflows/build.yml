@@ -38,7 +38,7 @@ jobs:
       - name: Create version file
         run: make version
       - name: Go Lint
-        uses: golangci/golangci-lint-action@v8
+        uses: golangci/golangci-lint-action@v9
       - name: Lint
         run: make shellcheck gofmt
         if: runner.os == 'Linux'
