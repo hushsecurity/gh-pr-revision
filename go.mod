@@ -1,11 +1,11 @@
 module github.com/hushsecurity/gh-pr-revision
 
-go 1.24.0
+go 1.25.0
 
 require (
 	github.com/alexflint/go-arg v1.6.0
 	github.com/cli/cli/v2 v2.82.1
-	github.com/cli/go-gh/v2 v2.12.2
+	github.com/cli/go-gh/v2 v2.13.0
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51
 )
 
