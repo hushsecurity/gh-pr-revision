@@ -204,7 +204,7 @@ func createRevision(args CreateArgs) error {
 
 	hash, err := args.GetHash()
 	if err != nil {
-		return nil
+		return err
 	}
 
 	pr, err := getPullRequest()
