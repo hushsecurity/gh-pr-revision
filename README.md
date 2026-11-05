@@ -55,6 +55,13 @@ To create a new revision make sure your pull request is `OPEN` and is not `Draft
 gh pr-revision create
 ```
 
+To create one on a draft pull request, pass `--allow-draft`. Review requests
+still go out unless you also pass `-n`.
+
+```shell
+gh pr-revision create --allow-draft
+```
+
 This command assumes that the new revision is associated with the `HEAD` commit.
 If the pull request tip commit is not the local `HEAD` specify a commitish
 explicitly:

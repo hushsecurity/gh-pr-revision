@@ -7,6 +7,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- Add `--allow-draft` knob to `create` command.
+
+  `create` refuses a draft pull-request, since nobody has been asked to review
+  it yet. A bot that opens its pull-requests as drafts and revises them in
+  answer to review comments still needs each round registered as a revision.
+  Review requests still go out unless `-n` is also passed.
+
 ## [0.7.2] - 2025-07-01
 
 ### Changed

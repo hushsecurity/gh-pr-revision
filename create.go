@@ -45,8 +45,8 @@ func (a *CreateArgs) resolveMessage() error {
 	return nil
 }
 
-func checkPrState(pr PullRequest) error {
-	if pr.IsDraft {
+func checkPrState(pr PullRequest, allowDraft bool) error {
+	if pr.IsDraft && !allowDraft {
 		return fmt.Errorf("pr is draft")
 	}
 	if pr.State != "OPEN" {
@@ -212,7 +212,7 @@ func createRevision(args CreateArgs) error {
 		return err
 	}
 
-	if err = checkPrState(pr); err != nil {
+	if err = checkPrState(pr, args.AllowDraft); err != nil {
 		return err
 	}
 
